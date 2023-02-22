@@ -3,11 +3,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Coupon_1 = __importDefault(require("../src/Coupon"));
-const DefaultFreightCalculator_1 = __importDefault(require("../src/DefaultFreightCalculator"));
-const FixedFreightCalculator_1 = __importDefault(require("../src/FixedFreightCalculator"));
-const Item_1 = __importDefault(require("../src/Item"));
-const Order_1 = __importDefault(require("../src/Order"));
+const Coupon_1 = __importDefault(require("../../src/domain/entity/Coupon"));
+const DefaultFreightCalculator_1 = __importDefault(require("../../src/domain/entity/DefaultFreightCalculator"));
+const FixedFreightCalculator_1 = __importDefault(require("../../src/domain/entity/FixedFreightCalculator"));
+const Item_1 = __importDefault(require("../../src/domain/entity/Item"));
+const Order_1 = __importDefault(require("../../src/domain/entity/Order"));
 test("Deve criar um pedido vazio com CPF válido", function () {
     const cpf = "839.435.452-10";
     const order = new Order_1.default(cpf);
