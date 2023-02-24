@@ -12,7 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const Order_1 = __importDefault(require("../../domain/entity/Order"));
+const DefaultFreightCalculator_1 = __importDefault(require("../../../domain/entity/DefaultFreightCalculator"));
+const Order_1 = __importDefault(require("../../../domain/entity/Order"));
 const PlaceOrderOutput_1 = __importDefault(require("./PlaceOrderOutput"));
 class PlaceOrder {
     constructor(itemRepository, orderRepository, couponRepository) {
@@ -22,7 +23,8 @@ class PlaceOrder {
     }
     execute(input) {
         return __awaiter(this, void 0, void 0, function* () {
-            const order = new Order_1.default(input.cpf, input.date);
+            const sequence = (yield this.orderRepository.count()) + 1;
+            const order = new Order_1.default(input.cpf, input.date, new DefaultFreightCalculator_1.default(), sequence);
             for (const orderItem of input.orderItems) {
                 const item = yield this.itemRepository.findById(orderItem.idItem);
                 if (!item)
@@ -36,7 +38,7 @@ class PlaceOrder {
             }
             yield this.orderRepository.save(order);
             const total = order.getTotal();
-            const output = new PlaceOrderOutput_1.default(total);
+            const output = new PlaceOrderOutput_1.default(order.getCode(), total);
             return output;
         });
     }

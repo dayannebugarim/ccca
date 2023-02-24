@@ -8,22 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-class OrderRepositoyMemory {
+const pg_promise_1 = __importDefault(require("pg-promise"));
+class PgPromiseConnectionAdapter {
     constructor() {
-        this.orders = [];
+        this.pgp = (0, pg_promise_1.default)()("postgres://postgres:root@localhost:5432/app");
     }
-    save(order) {
-        this.orders.push(order);
-        return Promise.resolve();
+    static getInstance() {
+        if (!PgPromiseConnectionAdapter.instance) {
+            PgPromiseConnectionAdapter.instance = new PgPromiseConnectionAdapter();
+        }
+        return PgPromiseConnectionAdapter.instance;
     }
-    count() {
-        return Promise.resolve(this.orders.length);
-    }
-    clear() {
+    query(statement, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.orders = [];
+            return this.pgp.query(statement, params);
         });
     }
 }
-exports.default = OrderRepositoyMemory;
+exports.default = PgPromiseConnectionAdapter;

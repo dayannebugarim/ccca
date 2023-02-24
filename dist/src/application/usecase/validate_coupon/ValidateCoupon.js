@@ -9,21 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-class OrderRepositoyMemory {
-    constructor() {
-        this.orders = [];
+class ValidateCoupon {
+    constructor(couponRepository) {
+        this.couponRepository = couponRepository;
     }
-    save(order) {
-        this.orders.push(order);
-        return Promise.resolve();
-    }
-    count() {
-        return Promise.resolve(this.orders.length);
-    }
-    clear() {
+    execute(code) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.orders = [];
+            const coupon = yield this.couponRepository.findByCode(code);
+            if (!coupon)
+                throw new Error("Invalid coupon");
+            return coupon.isValid();
         });
     }
 }
-exports.default = OrderRepositoyMemory;
+exports.default = ValidateCoupon;

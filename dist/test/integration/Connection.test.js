@@ -8,22 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-class OrderRepositoyMemory {
-    constructor() {
-        this.orders = [];
-    }
-    save(order) {
-        this.orders.push(order);
-        return Promise.resolve();
-    }
-    count() {
-        return Promise.resolve(this.orders.length);
-    }
-    clear() {
-        return __awaiter(this, void 0, void 0, function* () {
-            this.orders = [];
-        });
-    }
-}
-exports.default = OrderRepositoyMemory;
+const PgPromiseConnectionAdapter_1 = __importDefault(require("../../src/infra/database/PgPromiseConnectionAdapter"));
+test("Deve criar uma conexão com o banco de dados", function () {
+    return __awaiter(this, void 0, void 0, function* () {
+        const connection = PgPromiseConnectionAdapter_1.default.getInstance();
+        const itemsData = yield connection.query("SELECT * FROM ccca.item", []);
+        expect(itemsData).toHaveLength(6);
+    });
+});
