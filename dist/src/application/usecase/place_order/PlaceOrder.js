@@ -16,10 +16,11 @@ const DefaultFreightCalculator_1 = __importDefault(require("../../../domain/enti
 const Order_1 = __importDefault(require("../../../domain/entity/Order"));
 const PlaceOrderOutput_1 = __importDefault(require("./PlaceOrderOutput"));
 class PlaceOrder {
-    constructor(itemRepository, orderRepository, couponRepository) {
-        this.itemRepository = itemRepository;
-        this.orderRepository = orderRepository;
-        this.couponRepository = couponRepository;
+    constructor(repositoryFactory) {
+        this.repositoryFactory = repositoryFactory;
+        this.itemRepository = repositoryFactory.createItemRepository();
+        this.couponRepository = repositoryFactory.createCouponRepository();
+        this.orderRepository = repositoryFactory.createOrderRepository();
     }
     execute(input) {
         return __awaiter(this, void 0, void 0, function* () {
