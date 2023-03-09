@@ -2,7 +2,6 @@ import RepositoryFactory from "../../domain/factory/RepositoryFactory";
 import CouponRepository from "../../domain/repository/CouponRepository";
 import ItemRepository from "../../domain/repository/ItemRepository";
 import OrderRepository from "../../domain/repository/OrderRepository";
-import Connection from "../database/Connection";
 import PgPromiseConnectionAdapter from "../database/PgPromiseConnectionAdapter";
 import CouponRepositoryDatabase from "../repository/database/CouponRepositoryDatabase";
 import ItemRepositoryDatabase from "../repository/database/ItemRepositoryDatabase";
